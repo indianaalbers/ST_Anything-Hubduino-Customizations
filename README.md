@@ -1,2 +1,2 @@
-# SmartThings-Hubduino-Customizations
-SmartThings/Hubduino Customizations
+# ST_Anything-Hubduino-Customizations
+ST_Anything/Hubduino Customizations
