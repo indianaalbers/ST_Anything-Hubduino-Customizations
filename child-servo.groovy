@@ -20,11 +20,12 @@
  *    ----        ---            ----
  *    2018-06-24  Dan Ogorchock  Original Creation
  *    2018-09-22  Dan Ogorchock  Added preference for debug logging
- *    2019-02-02  Jeff Albers	 Made Duration functional and allowed full range of Level 0-100
+ *    2019-01-30  Jeff Albers	 Set upper level value as 100 instead of 99
  * 
  */
 metadata {
 	definition (name: "Child Servo", namespace: "ogiewon", author: "Dan Ogorchock") {
+		capability "Switch"
 		capability "Switch Level"
 		capability "Actuator"
 		capability "Sensor"
@@ -38,7 +39,9 @@ metadata {
 
 	}
 
-    preferences {
+   	preferences {
+        input ("onvalue", "number", title: "On Percentage", required: false, defaultValue: 50, description: "Percentage that should be used for On command.")
+        input ("offvalue", "number", title: "Off Percentage", required: false, defaultValue: 0, description: "Percentage that should be used for Off command.")
         input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: true
 	}
 
@@ -64,6 +67,14 @@ metadata {
 	}
 }
 
+def on() {
+	setLevel(onvalue)
+}
+
+def off() {
+	setLevel(offvalue)
+}
+
 def logsOff(){
     log.warn "debug logging disabled..."
     device.updateSetting("logEnable",[value:"false",type:"bool"])
@@ -77,7 +88,13 @@ def setLevel(value, durationValue = null) {
     def durationValueaux = durationValue as Integer
 	def duration = Math.max(Math.min(durationValueaux, 10), 1)
     sendData("${level}" + ":" + "${duration}")
-	}
+	if (level == offvalue){
+        sendEvent(name: "switch", value: "off", isStateChange: true)
+    }
+    else {
+	    sendEvent(name: "switch", value: "on", isStateChange: true)
+    }
+}
 
 def sendData(String value) {
     def name = device.deviceNetworkId.split("-")[-1]
