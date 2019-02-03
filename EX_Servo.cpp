@@ -73,7 +73,7 @@ namespace st
 				}
 				
 				m_Servo.write(m_nCurrentAngle);
-				delay(timeStep / 2);  // divide by two to adjust theoretical delay to compensate for processing time
+				delay(timeStep / 1.4);  // divide by fudge factor to adjust theoretical delay to compensate for processing time.  1.4 works on Mega.
 			}
 		}
 		
