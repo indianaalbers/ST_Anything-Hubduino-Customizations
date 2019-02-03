@@ -42,6 +42,7 @@ metadata {
    	preferences {
         input ("onvalue", "number", title: "On Percentage", required: false, defaultValue: 50, description: "Percentage that should be used for On command.")
         input ("offvalue", "number", title: "Off Percentage", required: false, defaultValue: 0, description: "Percentage that should be used for Off command.")
+	input ("durationValue", "number", title: "Duration", required: false, defaultValue: 5, description: "Time in seconds to transition from 0 to 100 or 100 to 0 percent")
         input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: true
 	}
 
@@ -68,11 +69,11 @@ metadata {
 }
 
 def on() {
-	setLevel(onvalue)
+	setLevel(onvalue, durationValue)
 }
 
 def off() {
-	setLevel(offvalue)
+	setLevel(offvalue, durationValue)
 }
 
 def logsOff(){
