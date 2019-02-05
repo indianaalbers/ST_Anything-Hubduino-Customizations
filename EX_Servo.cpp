@@ -67,13 +67,13 @@ namespace st
 					m_nCurrentAngle = m_nCurrentAngle - 1;
 				}
 				
-				if (st::Executor::debug) {
-					Serial.print(F("EX_Servo::writeAngle ToPin  currentAngle = "));
-					Serial.println(m_nCurrentAngle);
-				}
+				//if (st::Executor::debug) {
+				//	Serial.print(F("EX_Servo::writeAngle ToPin  currentAngle = "));
+				//	Serial.println(m_nCurrentAngle);
+				//}
 				
 				m_Servo.write(m_nCurrentAngle);
-				delay(timeStep / 1.4);  // divide by fudge factor to adjust theoretical delay to compensate for processing time.  1.4 works on Mega.
+				delay(timeStep / 1.8);  // divide by fudge factor to adjust theoretical delay to compensate for processing time.  1.8 works on Mega.
 			}
 		}
 		
